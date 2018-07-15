@@ -1,10 +1,10 @@
 package gin
 
 import (
-	log "github.com/alecthomas/log4go"
-	pb "base_server/protocol"
-	"base_server/util"
 	"fmt"
+	log "github.com/alecthomas/log4go"
+	pb "github.com/baseserver/protocol"
+	"github.com/baseserver/util"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"reflect"
@@ -13,14 +13,20 @@ import (
 
 type BaseServer struct {
 	Server        interface{}
-	Group         *gin.RouterGroup
+	Engine        *gin.Engine
+	Group         string
 	Middle        gin.HandlerFunc
 	CommonReqFunc func(commonReq *reflect.Value)
 }
 
 func (b *BaseServer) Register() {
 
-	server, g := b.Server, b.Group
+	if b.Engine == nil || b.Server == nil || b.Group == "" {
+		log.Info(fmt.Sprintf("Invalid input params,[engine=%v] [server=%v] [group=%v]", b.Engine, b.Server, b.Group))
+		return
+	}
+
+	server, g := b.Server, b.Engine.Group(b.Group)
 
 	if b.Middle != nil {
 		g.Use(b.Middle)
