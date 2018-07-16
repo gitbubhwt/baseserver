@@ -13,20 +13,19 @@ import (
 
 type BaseServer struct {
 	Server        interface{}
-	Engine        *gin.Engine
-	Group         string
+	Group         *gin.RouterGroup
 	Middle        gin.HandlerFunc
 	CommonReqFunc func(commonReq *reflect.Value)
 }
 
 func (b *BaseServer) Register() {
 
-	if b.Engine == nil || b.Server == nil || b.Group == "" {
-		log.Info(fmt.Sprintf("Invalid input params,[engine=%v] [server=%v] [group=%v]", b.Engine, b.Server, b.Group))
+	if b.Group == nil || b.Server == nil {
+		log.Info(fmt.Sprintf("Invalid input params,[server=%v] [group=%v]", b.Server, b.Group))
 		return
 	}
 
-	server, g := b.Server, b.Engine.Group(b.Group)
+	server, g := b.Server, b.Group
 
 	if b.Middle != nil {
 		g.Use(b.Middle)
