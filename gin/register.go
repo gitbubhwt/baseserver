@@ -20,6 +20,7 @@ type BaseServer struct {
 
 func (b *BaseServer) Register() {
 
+	log.Info(fmt.Sprintf("test"))
 	if b.Group == nil || b.Server == nil {
 		log.Info(fmt.Sprintf("Invalid input params,[server=%v] [group=%v]", b.Server, b.Group))
 		return
