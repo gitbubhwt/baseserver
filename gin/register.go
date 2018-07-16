@@ -3,8 +3,8 @@ package gin
 import (
 	"fmt"
 	log "github.com/alecthomas/log4go"
-	pb "github.com/baseserver/protocol"
-	"github.com/baseserver/util"
+	pb "github.com/gitbubhwt/baseserver/protocol"
+	"github.com/gitbubhwt/baseserver/util"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"reflect"
